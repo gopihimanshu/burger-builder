@@ -4,11 +4,24 @@ import classes from "./Burger.module.css";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 const burger = (props) => {
+  let transformedIngredients = Object.keys(props.ingredients)
+    .map((igKey) => {
+      return [...Array(props.ingredients[igKey])].map((_, i) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />;
+      });
+    })
+    .reduce((arr, elem) => {
+      return arr.concat(elem);
+    }, []);
+  /* The reason I use reduce to flatten the array, so that I can check the length of 
+    transformedIngredients and display message based on empty/non-empty array */
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please start adding ingredients</p>;
+  }
   return (
     <div className={classes.Burger}>
       <BurgerIngredient type={"bread-top"} />
-      <BurgerIngredient type={"cheese"} />
-      <BurgerIngredient type={"meat"} />
+      {transformedIngredients}
       <BurgerIngredient type={"bread-bottom"} />
     </div>
   );
