@@ -27,10 +27,6 @@ class BurgerBuilder extends Component {
   };
 
   updatePurchaseState(ingredients) {
-    // const sum = Object.values(ingredients).reduce((sum, el) => {
-    //   return sum + el;
-    // }, 0);
-
     const sum = Object.keys(ingredients)
       .map((igKey) => {
         return ingredients[igKey];
@@ -108,7 +104,6 @@ class BurgerBuilder extends Component {
             price={this.state.totalPrice}
           ></OrderSummary>
         </Modal>
-        )
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
