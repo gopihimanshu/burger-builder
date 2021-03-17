@@ -1,37 +1,43 @@
-import React from "react";
+import React, { Component } from "react";
 
-import Auxiliary from "../../../hoc/Auxiliary";
+import Auxiliary from "../../../hoc/Auxiliary/Auxiliary";
 import Button from "../../UI/Button/Button";
 
-const orderSummary = (props) => {
-  const ingredientSummary = Object.keys(props.ingredients).map((igKey) => {
-    return (
-      <li key={igKey}>
-        <span style={{ textTransform: "capitalize" }}>
-          {igKey}: {props.ingredients[igKey]}
-        </span>
-      </li>
+class OrderSummary extends Component {
+  componentDidUpdate() {
+    console.log("Order summary will update");
+  }
+  render() {
+    const ingredientSummary = Object.keys(this.props.ingredients).map(
+      (igKey) => {
+        return (
+          <li key={igKey}>
+            <span style={{ textTransform: "capitalize" }}>
+              {igKey}: {this.props.ingredients[igKey]}
+            </span>
+          </li>
+        );
+      }
     );
-  });
+    return (
+      <Auxiliary>
+        <h3>Your Order</h3>
+        <p>A delicious burger with following ingredients</p>
+        <ul>{ingredientSummary}</ul>
+        <p>
+          <strong>Total Price : {this.props.price.toFixed(2)}</strong>
+        </p>
+        <p>Continue to Checkout ?</p>
 
-  return (
-    <Auxiliary>
-      <h3>Your Order</h3>
-      <p>A delicious burger with following ingredients</p>
-      <ul>{ingredientSummary}</ul>
-      <p>
-        <strong>Total Price : {props.price.toFixed(2)}</strong>
-      </p>
-      <p>Continue to Checkout ?</p>
+        <Button btnType="Danger" clicked={this.props.purchaseCancelled}>
+          CANCEL
+        </Button>
+        <Button btnType="Success" clicked={this.props.purchaseContinued}>
+          CONTINUE
+        </Button>
+      </Auxiliary>
+    );
+  }
+}
 
-      <Button btnType="Danger" clicked={props.purchaseCancelled}>
-        CANCEL
-      </Button>
-      <Button btnType="Success" clicked={props.purchaseContinued}>
-        CONTINUE
-      </Button>
-    </Auxiliary>
-  );
-};
-
-export default orderSummary;
+export default OrderSummary;
